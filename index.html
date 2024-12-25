@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Tapping Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0b3d91;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #8b0000;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .game-area {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: auto;
+        }
+
+        .tap-image {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+
+        .restart-button {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ffa500;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .restart-button:hover {
+            background-color: #ff7f00;
+        }
+
+        .restart-button.visible {
+            display: inline-block;
+        }
+
+        .timer {
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tap the Yellow Car!</h1>
+        <div class="instructions">Tap the yellow car 100 times in 30 seconds to win!</div>
+        <div class="game-area">
+            <img src="transport.png" alt="Yellow Car" class="tap-image" id="tapImage">
+        </div>
+        <div class="timer" id="timer">Time Left: 30s</div>
+        <div class="feedback" id="feedback">Taps: 0</div>
+        <button class="restart-button" id="restartButton">Restart</button>
+    </div>
+
+    <script>
+        let tapCount = 0;
+        let timeLeft = 30;
+        let timerInterval;
+
+        const tapImage = document.getElementById('tapImage');
+        const timerElement = document.getElementById('timer');
+        const feedbackElement = document.getElementById('feedback');
+        const restartButton = document.getElementById('restartButton');
+
+        function startGame() {
+            tapCount = 0;
+            timeLeft = 30;
+            feedbackElement.textContent = `Taps: ${tapCount}`;
+            timerElement.textContent = `Time Left: ${timeLeft}s`;
+            restartButton.classList.remove('visible');
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `Time Left: ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            if (tapCount >= 100) {
+                feedbackElement.textContent = `Congratulations! You tapped ${tapCount} times!`;
+            } else {
+                feedbackElement.textContent = `Game Over! You tapped ${tapCount} times.`;
+            }
+
+            restartButton.classList.add('visible');
+        }
+
+        tapImage.addEventListener('click', () => {
+            if (timeLeft > 0) {
+                tapCount++;
+                feedbackElement.textContent = `Taps: ${tapCount}`;
+            }
+        });
+
+        restartButton.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            startGame();
+        });
+
+        startGame();
+    </script>
+</body>
+</html>
