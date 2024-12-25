@@ -75,7 +75,7 @@
 <body>
     <div class="container">
         <h1>Tap the Yellow Car!</h1>
-        <div class="instructions">Tap the yellow car 100 times in 30 seconds to win!</div>
+        <div class="instructions">Tap the yellow car 120 times or more in 30 seconds to win!</div>
         <div class="game-area">
             <img src="transport.png" alt="Yellow Car" class="tap-image" id="tapImage">
         </div>
@@ -113,8 +113,8 @@
         }
 
         function endGame() {
-            if (tapCount >= 100) {
-                feedbackElement.textContent = `Congratulations! You tapped ${tapCount} times!`;
+            if (tapCount >= 120) {
+                feedbackElement.textContent = `Congratulations! You tapped ${tapCount} times! Code 3 is YK`;
             } else {
                 feedbackElement.textContent = `Game Over! You tapped ${tapCount} times.`;
             }
